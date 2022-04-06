@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+
+{% block content_search %}
+    <center>
+        {% if searched %}
+        <h2>You search for.....{{ searched }}</h2>
+
+        {% for p in result %}
+        <a href="{{ p.get_absolute_url }}">
+            {{ p.title }}
+        </a>
+        {{ p.body|markdown|truncatewords_html:21 }}
+        {% endfor %}
+
+        {% else %}
+        <h2>Nothing Found...</h2>
+        {% endif %}
+    </center>
+ {{ obj }}
+{% endblock %}
