@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
     'allauth',
     'allauth.account',
@@ -69,6 +70,7 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR /'templates',
             BASE_DIR /'templates'/'blog'/'templates',
+            BASE_DIR /'templates'/'forum'/'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
