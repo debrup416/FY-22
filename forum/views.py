@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import AnswerForm,QuestionForm
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 # Home Page
 def home(request):
@@ -19,6 +20,7 @@ def home(request):
     return render(request,'forum/home.html',{'quests':quests})
 
 # Detail
+@login_required
 def detail(request,id):
     quest=Question.objects.get(pk=id)
     tags=quest.tags.split(',')

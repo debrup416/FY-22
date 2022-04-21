@@ -33,6 +33,20 @@ class Comment(models.Model):
         return self.comment
 
 
+class UpVoteQuerySet(models.QuerySet):
+    def delete(self, *args, **kwargs):
+        for obj in self:
+            obj.img.delete()
+        super(UpVoteQuerySet, self).delete(*args, **kwargs)
+    
+class DownQuerySet(models.QuerySet):
+    def delete(self, *args, **kwargs):
+        for obj in self:
+            obj.img.delete()
+        super(DownQuerySet, self).delete(*args, **kwargs)
+    
+
+
 # UpVotes
 class UpVote(models.Model):
     answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
