@@ -3,13 +3,14 @@ from django.contrib.auth.models import User,AbstractUser
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Question(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     title=models.CharField(max_length=300)
     slug = models.SlugField(unique=True)
-    detail=models.TextField()
+    detail=RichTextField()
     tags=models.TextField(default='')
     add_time=models.DateTimeField(auto_now_add=True)
 
@@ -23,7 +24,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question=models.ForeignKey(Question,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    detail=models.TextField()
+    detail=RichTextField()
     add_time=models.DateTimeField(auto_now_add=True)
     upvote=models.ManyToManyField(User,related_name='upvote_ans')
     downvote=models.ManyToManyField(User,related_name='downvote_ans')

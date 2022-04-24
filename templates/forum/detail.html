@@ -16,7 +16,7 @@
             <a href="{% url 'forum:ques_del' quest.slug  %}">Delete Post</a>
         {% endif %}
     {% endif %}
-    <p>{{quest.detail}}</p>
+    <p>{{quest.detail|safe }}</p>
     <p>
         tags:
         {% for tag in tags %}
@@ -36,7 +36,8 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Edit your post</legend>
-            {{ form | crispy }}
+            {{ form.media }}
+            {{ form.as_p}}
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Update</button>
@@ -75,7 +76,7 @@
 
         <div class="col-11">
             <p>
-                {{ answer.detail }}
+                {{ answer.detail|safe }}
             </p>
 
             <p>
@@ -121,7 +122,8 @@
     <form method="post">
         {% csrf_token %}
         <table class="table table-bordered">
-            {{answerform.as_table}}
+            {{answerform.media}}
+            {{answerform|crispy}}
             <tr>
                 <td colspan="2">
                     <input type="submit" class="btn btn-dark" />
