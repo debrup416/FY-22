@@ -1,0 +1,14 @@
+{% extends "forum/base.html" %}
+
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <p>Are u sure. Want to delete "{{object}}"</p>
+
+    <a href="{{object.get_absolute_url}} ">Go back</a>
+    <input type="submit" value="confirm">
+</form>
+{% endblock %}
+
+

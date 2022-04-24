@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import AnswerForm,QuestionForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 
 # Home Page
@@ -44,6 +45,7 @@ def detail(request,slug):
     return render(request,'forum/detail.html',context)
 
 # Save Comment
+@login_required
 def save_comment(request):
     if request.method=='POST':
         comment=request.POST['comment']
@@ -99,6 +101,7 @@ def save_downvote(request,id,pk):
 
 
 # Ask Form
+@login_required
 def ask_form(request):
     form=QuestionForm
     if request.method=='POST':
@@ -108,7 +111,57 @@ def ask_form(request):
             questForm.user=request.user
             questForm.save()
             messages.success(request,'Question has been added.')
+            return redirect(questForm.get_absolute_url())
     return render(request,'forum/ask-question.html',{'form':form})
+
+
+
+@login_required
+def post_edit(request, slug):
+
+    page = 'post-edit'
+    p = get_object_or_404(Question, slug=slug)
+    if p.user.id != request.user.id:
+        raise PermissionDenied
+    form = QuestionForm(instance=p)
+
+    if request.method == 'POST':
+        form = QuestionForm(request.POST,
+                        request.FILES,
+                        instance=p)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Question Updated')
+            return redirect(p.get_absolute_url())
+
+    else:
+        form = QuestionForm(instance=p)
+
+    context = {
+        'form': form,
+        'page': page,
+        'post': p,
+    }
+
+    return render(request, 'forum/detail.html', context)
+
+
+@login_required
+def deletePost(request, slug):
+    # p=Post.objects.get(slug=slug)
+
+    p = get_object_or_404(Question, slug=slug)
+    if p.user.id != request.user.id:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        p.delete()
+        return redirect('forum:home')
+
+    context = {'object': p}
+    return render(request, 'forum/quesdelete.html', context)
+
+
 
 
 # Questions according to tag
@@ -138,6 +191,7 @@ def tags(request):
             'count':Question.objects.filter(tags__icontains=tag).count()
         }
         tag_with_count.append(tag_data)
+    print(tag_with_count)
     return render(request,'forum/tags.html',{'tags':tag_with_count})
         
         
