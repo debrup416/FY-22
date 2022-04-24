@@ -68,7 +68,7 @@
         {% for quest in quests %}
         <div class="card mb-4 shadow">
             <div class="card-body">
-                <h4 class="card-title"><a href="{% url 'forum:detail' quest.id %}">{{quest.title}}</a></h4>
+                <h4 class="card-title"><a href="{% url 'forum:detail' quest.slug %}">{{quest.title}}</a></h4>
                 <p class="card-text">{{quest.detail}}</p>
                 <p>
                     {% if user.is_authenticated %}

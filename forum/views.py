@@ -1,11 +1,12 @@
-from django.shortcuts import render,HttpResponse
-from django.http import JsonResponse
-from .models import Question,Answer,Comment,UpVote,DownVote
+from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
+from django.http import JsonResponse,HttpResponseRedirect
+from .models import Question,Answer,Comment
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import AnswerForm,QuestionForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+
 
 # Home Page
 def home(request):
@@ -21,8 +22,8 @@ def home(request):
 
 # Detail
 @login_required
-def detail(request,id):
-    quest=Question.objects.get(pk=id)
+def detail(request,slug):
+    quest=get_object_or_404(Question,slug=slug)
     tags=quest.tags.split(',')
     answers=Answer.objects.filter(question=quest)
     answerform=AnswerForm
@@ -34,12 +35,13 @@ def detail(request,id):
             answer.user=request.user
             answer.save()
             messages.success(request,'Answer has been submitted.')
-    return render(request,'forum/detail.html',{
+    context={
         'quest':quest,
         'tags':tags,
         'answers':answers,
         'answerform':answerform
-    })
+    }
+    return render(request,'forum/detail.html',context)
 
 # Save Comment
 def save_comment(request):
@@ -55,38 +57,45 @@ def save_comment(request):
         )
         return JsonResponse({'bool':True})
 
-# Save Upvote
-def save_upvote(request):
-    if request.method=='POST':
-        answerid=request.POST['answerid']
-        answer=Answer.objects.get(pk=answerid)
-        user=request.user
-        check=UpVote.objects.filter(answer=answer,user=user).count()
-        if check > 0:
-            return JsonResponse({'bool':False})
-        else:
-            UpVote.objects.create(
-                answer=answer,
-                user=user
-            )
-            return JsonResponse({'bool':True})
+ 
+@login_required
+def save_upvote(request,id,pk):
+    p=get_object_or_404(Answer,id=id)
 
-# Save Downvote
-def save_downvote(request):
-    if request.method=='POST':
-        answerid=request.POST['answerid']
-        answer=Answer.objects.get(pk=answerid)
-        user=request.user
-        check=DownVote.objects.filter(answer=answer,user=user).count()
-        if check > 0:
-            return JsonResponse({'bool':False})
-        else:
-            DownVote.objects.create(
-                answer=answer,
-                user=user
-            )
-            return JsonResponse({'bool':True})
+    if p.downvote.filter(id=request.user.id).exists():
+        p.downvote.remove(request.user)
 
+    if p.upvote.filter(id=request.user.id).exists():
+        p.upvote.remove(request.user)
+    else:
+        p.upvote.add(request.user)
+
+    p.total_upvote=p.upvote.count()
+    p.total_downvote=p.downvote.count()
+    p.save()
+
+    q=get_object_or_404(Question,id=pk)
+
+    return redirect(q.get_absolute_url())  
+
+@login_required
+def save_downvote(request,id,pk):
+    p=get_object_or_404(Answer,id=id)
+
+    if p.upvote.filter(id=request.user.id).exists():
+        p.upvote.remove(request.user)
+
+    if p.downvote.filter(id=request.user.id).exists():
+        p.downvote.remove(request.user)
+    else:
+        p.downvote.add(request.user)
+
+    p.total_upvote=p.upvote.count()
+    p.total_downvote=p.downvote.count()
+    p.save()
+
+    q=get_object_or_404(Question,id=pk)  
+    return redirect(q.get_absolute_url()) 
 
 
 # Ask Form

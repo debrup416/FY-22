@@ -1,14 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User,AbstractUser
-
+from django.db.models.signals import pre_save
+from django.utils.text import slugify
+from django.urls import reverse
 # Create your models here.
 
 class Question(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     title=models.CharField(max_length=300)
+    slug = models.SlugField(unique=True)
     detail=models.TextField()
     tags=models.TextField(default='')
     add_time=models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('forum:detail', args=[self.slug])
 
     def __str__(self):
         return self.title
@@ -19,6 +25,10 @@ class Answer(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     detail=models.TextField()
     add_time=models.DateTimeField(auto_now_add=True)
+    upvote=models.ManyToManyField(User,related_name='upvote_ans')
+    downvote=models.ManyToManyField(User,related_name='downvote_ans')
+    total_upvote=models.IntegerField(default=0)
+    total_downvote=models.IntegerField(default=0)
 
     def __str__(self):
         return self.detail
@@ -33,29 +43,18 @@ class Comment(models.Model):
         return self.comment
 
 
-class UpVoteQuerySet(models.QuerySet):
-    def delete(self, *args, **kwargs):
-        for obj in self:
-            obj.img.delete()
-        super(UpVoteQuerySet, self).delete(*args, **kwargs)
-    
-class DownQuerySet(models.QuerySet):
-    def delete(self, *args, **kwargs):
-        for obj in self:
-            obj.img.delete()
-        super(DownQuerySet, self).delete(*args, **kwargs)
-    
 
 
-# UpVotes
-class UpVote(models.Model):
-    answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='upvote_user')
-
-# DownVotes
-class DownVote(models.Model):
-    answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='downvote_user')
 
 
+from blog.utils import unique_slug_generator
+
+def pre_save_post_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        # instance.slug = create_slug(instance)
+        instance.slug = unique_slug_generator(instance)
+
+
+
+pre_save.connect(pre_save_post_receiver, sender=Question)
 

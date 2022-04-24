@@ -12,11 +12,3 @@ class CommentAdmin(admin.ModelAdmin):
     list_display=('answer','comment')
 admin.site.register(Comment,CommentAdmin)
 
-class UpvoteAdmin(admin.ModelAdmin):
-    list_display=('answer','user')
-admin.site.register(UpVote,UpvoteAdmin)
-
-class DownvoteAdmin(admin.ModelAdmin):
-    list_display=('answer','user')
-admin.site.register(DownVote,DownvoteAdmin)
-
