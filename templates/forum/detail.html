@@ -23,19 +23,32 @@
         {% for answer in answers %}
         <div class="row">
             <div class="col-1" style="text-align: center;">
+                 
                 <div class="upvote">
-                    <strong class="upvote-count-{{answer.id}}">{{answer.upvote_set.count}}</strong><br/>
+                    <strong>{{answer.total_upvote}}</strong><br/>
                     <span class="text-success">
-                        <i class="fa fa-arrow-up fa-2x upvote-click" data-answer="{{answer.id}}"></i>
+                        <form method="POST" action="{% url 'forum:save-upvote' answer.id quest.id %}">
+                            {% csrf_token %}
+                            <button type="submit",name='answer_id',value='{{ answer.id }}'>
+                                <i class="fa fa-arrow-up fa-2x"></i>
+                            </button>
+                        </form>
                     </span>
                 </div>
                 <div class="downvote mt-3">
                     <span class="text-danger">
-                        <i class="fa fa-arrow-down fa-2x downvote-click" data-answer="{{answer.id}}"></i>
+                        <form method="POST" action="{% url 'forum:save-downvote' answer.id quest.id %}">
+                            {% csrf_token %}
+                            <button type="submit",name='answer_id',value='{{ answer.id }}'>
+                                <i class="fa fa-arrow-down fa-2x"></i>
+                            </button>
+                        </form>
                     </span><br/>
-                    <strong class="downvote-count-{{answer.id}}">{{answer.downvote_set.count}}</strong>
+                    <strong>{{answer.total_downvote}}</strong>
                 </div>
+               
             </div>
+
             <div class="col-11">
                 <p>
                     {{ answer.detail }}
