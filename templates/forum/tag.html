@@ -9,7 +9,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h4 class="card-title"><a href="{% url 'forum:detail' quest.slug %}">{{quest.title}}</a></h4>
-                <p class="card-text">{{quest.detail}}</p>
+                <p class="card-text">{{quest.detail|safe}}</p>
                 <p>
                     <a href="{% url 'profile' request.user.profile.pk %}" class="mr-2">{{quest.user.username}}</a>
                     <a href="#" class="mr-2">{{quest.answer_set.count}} Answers</a>
