@@ -1,7 +1,6 @@
 from email import message
 from importlib.resources import contents
 from re import search
-from turtle import pos, title
 from django.contrib import messages
 from multiprocessing import context
 from urllib import request
