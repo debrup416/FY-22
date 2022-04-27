@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.http import JsonResponse,HttpResponseRedirect
 from .models import Question,Answer,Comment
@@ -11,6 +12,7 @@ from django.core.exceptions import PermissionDenied
 
 # Home Page
 def home(request):
+    page='home'
     if 'q' in request.GET:
         q=request.GET['q']
         quests=Question.objects.annotate(total_comments=Count('answer__comment')).filter(title__icontains=q).order_by('-id')
@@ -19,7 +21,11 @@ def home(request):
     paginator=Paginator(quests,10)
     page_num=request.GET.get('page',1)
     quests=paginator.page(page_num)
-    return render(request,'forum/home.html',{'quests':quests})
+    context={
+        'quests':quests,
+        'page':page,
+    }
+    return render(request,'forum/home.html',context)
 
 # Detail
 @login_required
