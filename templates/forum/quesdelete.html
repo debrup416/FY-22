@@ -2,13 +2,17 @@
 
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <p>Are u sure. Want to delete "{{object}}"</p>
+<center style="margin-top: 10%">
+    <form method="POST">
+        {% csrf_token %}
+        <h5>Are u sure. Want to delete ?</h5>
+        <div style=" width: 320px; padding: 10px;  border: 1px solid rgb(128, 128, 128); margin: 0;">
+            <p>"{{object}}"</p>
+        </div>
+        <div style="margin-top: 25px;"></div>
+        <a href="{{object.get_absolute_url}} " class="btn btn-warning">Go back</a>
+        <input type="submit" value="confirm" class="btn btn-danger">
+    </form>
+</center>
 
-    <a href="{{object.get_absolute_url}} ">Go back</a>
-    <input type="submit" value="confirm">
-</form>
 {% endblock %}
-
-
