@@ -1,4 +1,4 @@
-<nav  class="navbar navbar-light" style="background-color: #b5f3f5">
+<nav  class="navbar navbar-light" style="background-color: #82dadd">
     <div class="container">
         <a class="navbar-brand" href="/"><strong>Home</strong></a>
 
@@ -6,7 +6,7 @@
             <a class="nav-item nav-link" style="color: black;" href="{% url 'blog:post_list' %}"><strong>BLOG</strong></a>
             <a class="nav-item nav-link"style="color: black;"  href="{% url 'forum:home' %}"><strong>FORUM</strong></a>
             {% if page == 'home' %}
-            <a class="nav-item nav-link"style="color: black;"  href="{% url 'forum:ask-question' %}"><i class="fa fa-question"></i></a>
+            <a class="nav-item nav-link"style="color: black;"  href="{% url 'forum:ask-question' %}"><i class="fa fa-question-circle"></i></a>
             {% endif %}
         </nav> 
 
@@ -41,3 +41,7 @@
         </div>
     </div>
 </nav>
+
+
+
+
