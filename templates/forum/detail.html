@@ -125,6 +125,7 @@
     {% for msg in messages %}
     <p class="text-success">{{msg}}</p>
     {% endfor %}
+    {% if page != 'post-edit' %}
     <form method="post">
         {% csrf_token %}
         <table class="table table-bordered">
@@ -137,6 +138,7 @@
             </tr>
         </table>
     </form>
+    {% endif %}
     {% endif %}
 </div>
 <script>
