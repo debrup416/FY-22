@@ -1,0 +1,72 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block title %}{{quest.title}}{% endblock %}
+{% block content %}
+
+
+<center>
+    {% if count > 0 %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control form-control-lg" placeholder="Search" />
+                        <div class="input-group-append">
+                        <button class="btn btn-dark btn-lg" type="submit" id="button-addon2">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <h3>{{ count }} UnAnswered Questions</h3>
+    {% else %}
+    <h3>No UnAnswered Question</h3>
+    {% endif %}
+</center>
+
+
+<div class="container">
+    {% for quest in unanswered_question %}
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            <h4 class="card-title"><a href="{% url 'forum:detail' quest.slug %}">{{quest.title}}</a></h4>
+            <p class="card-text">{{quest.detail|safe}}</p>
+            <p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' quest.user.profile.pk %}" class="mr-2">{{quest.user.username}}</a>
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-footer">
+            <small>{{quest.add_time}}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if unanswered_question.has_other_pages %}
+<!-- Pagination -->
+<nav class="my-3 container">
+    <ul class="pagination">
+        {% if unanswered_question.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{unanswered_question.previous_page_number}}">Previous</a></li>
+      {% endif %}
+      {% for i in unanswered_question.paginator.page_range %}
+      {% if unanswered_question.number == i %}
+      <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if unanswered_question.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{unanswered_question.next_page_number}}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+ 
+{% endblock %}
