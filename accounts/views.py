@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils import timezone
+from blog.models import *
 # Create your views here.
 
 def show(request):
@@ -24,7 +25,9 @@ class ProfileView(View):
     def get(self,request,pk,*args,**kwargs):
         profile=UserProfile.objects.get(pk=pk)
         user=profile.user
-        posts=None
+       
+        posts = Post.objects.filter(author=user)
+        print(posts)
 
         followers=profile.followers.all()
 
