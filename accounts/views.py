@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils import timezone
 from blog.models import *
+from forum.models import *
 # Create your views here.
 
 def show(request):
@@ -27,7 +28,8 @@ class ProfileView(View):
         user=profile.user
        
         posts = Post.objects.filter(author=user)
-        print(posts)
+        quests=Question.objects.filter(user=user).order_by('-id')
+        answers=Answer.objects.filter(user=user).order_by('-id')
 
         followers=profile.followers.all()
 
@@ -47,6 +49,8 @@ class ProfileView(View):
             'posts':posts,
             'number_of_followers':number_of_followers,
             'is_following':is_following,
+            'quests':quests,
+            'answers':answers,
         }
 
         return render(request,'accounts/profile.html',context)
