@@ -7,6 +7,7 @@ urlpatterns=[
     path('tags',views.tags,name='tags'),
     path('tag/<str:tag>/',views.tag,name='tag'),
     path('ask-question',views.ask_form,name='ask-question'),
+    path('unanswered',views.give_answer,name='unanswered'),
     path('save-comment',views.save_comment,name='save-comment'),
     path('<slug:slug>',views.detail,name='detail'),
     path('<slug:slug>/edit/', views.post_edit, name='ques_edit'),
