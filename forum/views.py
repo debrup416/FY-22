@@ -27,6 +27,24 @@ def home(request):
     }
     return render(request,'forum/home.html',context)
 
+def give_answer(request):
+    if 'q' in request.GET:
+        q=request.GET['q']
+        unanswered_question=Question.objects.filter(answer__isnull=True).filter(title__icontains=q)
+    else:
+        unanswered_question=Question.objects.filter(answer__isnull=True)
+    count=unanswered_question.count()
+    
+    paginator=Paginator(unanswered_question,17)
+    page_num=request.GET.get('page',1)
+    unanswered_question=paginator.page(page_num)
+    
+    context={
+        'unanswered_question':unanswered_question,
+        'count':count,
+    }
+    return render(request,'forum/unanswered.html',context)
+
 # Detail
 @login_required
 def detail(request,slug):
