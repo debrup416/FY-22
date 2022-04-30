@@ -9,46 +9,47 @@
 
     {% if page != 'post-edit' %}
     <h2 class="my-4">{{quest.title}}</h2>
-   <div class="btn-group">
-        {% if user.is_authenticated %}
-        {% if request.user.id == quest.user.id %}
-            <a href="{% url 'forum:ques_edit' quest.slug  %}">
-                <button type="button" class="btn btn-outline-warning">Edit</button>
-            </a>
-            <br>
-            <a href="{% url 'forum:ques_del' quest.slug  %}">
-                <button type="button" class="btn btn-danger">Delete</button>
-            </a>
-        {% endif %}
-        {% endif %}
-   </div>
-    <p>{{quest.detail|safe }}</p>
-    <p>
-        tags:
-        {% for tag in tags %}
-        <a href="/ask/tag/{{tag|slugify}}" class="badge badge-secondary p-1">{{tag}}</a>
-        {% endfor %}
-    </p>
-    {% if user.is_authenticated %}
-    <p>
-        <span class="mr-4">{{quest.add_time|date:'d/m/Y'}}</span>
-        <a href="{% url 'profile' quest.user.profile.pk %}">{{quest.user.username}}</a>
-    </p>
-    {% endif %}
-    <hr />
-    {% endif %}
-    {% if page == 'post-edit' %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Edit your post</legend>
-            {{ form.media }}
-            {{ form.as_p}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Update</button>
+        <div class="btn-group">
+                {% if user.is_authenticated %}
+                {% if request.user.id == quest.user.id %}
+                    <a href="{% url 'forum:ques_edit' quest.slug  %}">
+                        <button type="button" class="btn btn-outline-warning">Edit</button>
+                    </a>
+                    <br>
+                    <a href="{% url 'forum:ques_del' quest.slug  %}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                {% endif %}
+                {% endif %}
         </div>
-       </form>
+        <p>{{quest.detail|safe }}</p>
+        <p>
+            tags:
+            {% for tag in tags %}
+            <a href="/ask/tag/{{tag|slugify}}" class="badge badge-secondary p-1">{{tag}}</a>
+            {% endfor %}
+        </p>
+        {% if user.is_authenticated %}
+            <p>
+                <span class="mr-4">{{quest.add_time|date:'d/m/Y'}}</span>
+                <a href="{% url 'profile' quest.user.profile.pk %}">{{quest.user.username}}</a>
+            </p>
+        {% endif %}
+    <hr/>
+    {% endif %}
+
+    {% if page == 'post-edit' %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit your post</legend>
+                {{ form.media }}
+                {{ form.as_p}}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
     {% endif %}
 
     {% for answer in answers %}
