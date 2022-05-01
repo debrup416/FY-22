@@ -1,0 +1,18 @@
+{% extends "forum/base.html" %}
+
+
+{% block content %}
+<center style="margin-top: 10%">
+    <form method="POST">
+        {% csrf_token %}
+        <h5>Are u sure. Want to delete your answer ?</h5>
+        <div style=" width: 320px; padding: 10px;  border: 1px solid rgb(128, 128, 128); margin: 0;">
+            <p>"{{object|safe}}"</p>
+        </div>
+        <div style="margin-top: 25px;"></div>
+        <a href="#" class="btn btn-warning">Go back</a>
+        <input type="submit" value="confirm" class="btn btn-danger">
+    </form>
+</center>
+
+{% endblock %}

@@ -141,6 +141,50 @@ def ask_form(request):
 
 
 @login_required
+def answer_edit(request, pk):
+    pg = 'answer-post'
+    p = get_object_or_404(Answer,id=pk)
+    if p.user.id != request.user.id:
+        raise PermissionDenied
+    ans_form = AnswerForm(instance=p)
+
+    if request.method == 'POST':
+        ans_form =AnswerForm(request.POST,
+                        request.FILES,
+                        instance=p)
+        if ans_form.is_valid():
+            ans_form.save()
+            messages.success(request, f'Answer Updated')
+            return redirect('forum:home')
+    else:
+        ans_form = AnswerForm(instance=p)
+    print("OK")
+    print(ans_form)
+
+    context = {
+        'ans_form': ans_form,
+        'pg': pg,
+        'post': p,
+    }
+    return render(request, 'forum/detail.html', context)
+
+
+@login_required
+def deleteAns(request, pk):
+    p = get_object_or_404(Answer,id=pk)
+    if p.user.id != request.user.id:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        p.delete()
+        return redirect('forum:home')
+
+    context = {'object': p}
+    return render(request, 'forum/ansdelete.html', context)
+
+
+
+@login_required
 def post_edit(request, slug):
 
     page = 'post-edit'
