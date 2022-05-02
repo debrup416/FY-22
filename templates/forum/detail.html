@@ -6,7 +6,7 @@
 {% block content %}
 <!-- Question List -->
 <div class="container">
-
+    {% if pg != 'answer-post' %}
     {% if page != 'post-edit' %}
     <h2 class="my-4">{{quest.title}}</h2>
         <div class="btn-group">
@@ -32,10 +32,11 @@
         {% if user.is_authenticated %}
             <p>
                 <span class="mr-4">{{quest.add_time|date:'d/m/Y'}}</span>
-                <a href="#">{{quest.user.username}}</a>
+                <a href="{% url 'profile' quest.user.profile.pk %}">{{quest.user.username}}</a>
             </p>
         {% endif %}
     <hr/>
+     
     {% endif %}
 
     {% if page == 'post-edit' %}
@@ -52,6 +53,7 @@
         </form>
     {% endif %}
 
+    {% endif %}
 
    
     {% for answer in answers %}
@@ -85,6 +87,7 @@
         </div>
 
         <div class="col-11">
+            {% if page != 'post-edit' %}
             {% if pg != 'answer-post' %}
             <p>
                 {{ answer.detail|safe }}
@@ -97,32 +100,23 @@
                 <span>{{answer.add_time|date:'d/m/Y h:i:s'}}</span>
                 {% if user.is_authenticated %}
                 {% if request.user.id == answer.user.id %}
+                <div class="btn-group">
                     <a href="{% url 'forum:ans_edit' answer.id  %}">
-                        <button type="button" class="btn btn-outline-warning">Edit answer</button>
+                        <button type="button" >
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
                     </a>
                     <br>
                     <a href="{% url 'forum:ans_del' answer.id  %}">
-                        <button type="button" class="btn btn-danger">Delete answer</button>
+                        <button type="button">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
                     </a>
+                </div>
                 {% endif %}
                 {% endif %}
             </p>
             {% endif %}
-
-            {% if pg == 'answer-post' %}
-                <h2>Hii</h2>
-                print("hii")
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Edit your ans</legend>
-                        {{ ans_form.media }}
-                        {{ ans_form.as_p}}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Update</button>
-                    </div>
-                </form>
             {% endif %}
 
             <!-- Comment Section Start -->

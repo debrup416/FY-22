@@ -155,7 +155,7 @@ def answer_edit(request, pk):
         if ans_form.is_valid():
             ans_form.save()
             messages.success(request, f'Answer Updated')
-            return redirect('forum:home')
+            return redirect(p.question.get_absolute_url())
     else:
         ans_form = AnswerForm(instance=p)
     print("OK")
@@ -166,7 +166,7 @@ def answer_edit(request, pk):
         'pg': pg,
         'post': p,
     }
-    return render(request, 'forum/detail.html', context)
+    return render(request, 'forum/ansedit.html', context)
 
 
 @login_required
@@ -177,7 +177,7 @@ def deleteAns(request, pk):
 
     if request.method == 'POST':
         p.delete()
-        return redirect('forum:home')
+        return redirect(p.question.get_absolute_url())
 
     context = {'object': p}
     return render(request, 'forum/ansdelete.html', context)

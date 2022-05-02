@@ -10,9 +10,10 @@
             <p>"{{object|safe}}"</p>
         </div>
         <div style="margin-top: 25px;"></div>
-        <a href="#" class="btn btn-warning">Go back</a>
+        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-warning">Go back</a>
         <input type="submit" value="confirm" class="btn btn-danger">
     </form>
 </center>
 
 {% endblock %}
+
