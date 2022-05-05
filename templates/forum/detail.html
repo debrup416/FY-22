@@ -32,7 +32,7 @@
         {% if user.is_authenticated %}
             <p>
                 <span class="mr-4">{{quest.add_time|date:'d/m/Y'}}</span>
-                <a href="{% url 'profile' quest.user.profile.pk %}">{{quest.user.username}}</a>
+                <a href="{% url 'profile' quest.user.profile.name %}">{{quest.user.username}}</a>
             </p>
         {% endif %}
     <hr/>
@@ -94,7 +94,7 @@
             </p>
 
             <p>
-                <a href="{% url 'profile' answer.user.profile.pk %}" class="mr-3">{{answer.user.username}}</a>
+                <a href="{% url 'profile' answer.user.profile.name %}" class="mr-3">{{answer.user.username}}</a>
                 <span class="mr-3"><span class="comment-count-{{answer.id}}">{{answer.comment_set.count}}</span>
                     comments</span>
                 <span>{{answer.add_time|date:'d/m/Y h:i:s'}}</span>
@@ -127,7 +127,7 @@
                     <div class="card-body">
                         <p>{{comment.comment}}</p>
                         <p>
-                            <a href="{% url 'profile' comment.user.profile.pk %}">{{comment.user.username}}</a>
+                            <a href="{% url 'profile' comment.user.profile.name %}">{{comment.user.username}}</a>
                         </p>
                     </div>
                 </div>
