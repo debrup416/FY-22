@@ -22,7 +22,7 @@ def show(request):
 
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin,View):
     def get(self,request,pk,*args,**kwargs):
         profile=UserProfile.objects.get(pk=pk)
         user=profile.user
