@@ -11,6 +11,7 @@ from django.urls import reverse
 class UserProfile(models.Model):
     user=models.OneToOneField(User,primary_key=True,verbose_name='user',related_name='profile',on_delete=models.CASCADE)
     name=models.SlugField()
+    nickname=models.CharField(max_length=30)
     bio=models.TextField(max_length=500,blank=True,null=True)
     birth_date=models.DateField(null=True,blank=True)
     location=models.CharField(max_length=100,blank=True,null=True)
@@ -31,6 +32,7 @@ def create_user_profile(sender,instance,created,**kwargs):
 @receiver(post_save,sender=User)
 def save_user_profile(sender,instance,**kwargs):
     instance.profile.name=User.get_username(instance)
+    instance.profile.nickname=instance.profile.name
     instance.profile.save()
 
 
