@@ -23,8 +23,8 @@ def show(request):
 
 
 class ProfileView(LoginRequiredMixin,View):
-    def get(self,request,pk,*args,**kwargs):
-        profile=UserProfile.objects.get(pk=pk)
+    def get(self,request,name,*args,**kwargs):
+        profile=UserProfile.objects.get(name=name)
         user=profile.user
        
         posts = Post.objects.filter(author=user)
@@ -64,7 +64,10 @@ class ProfileEditView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
 
     def get_success_url(self):
         pk=self.kwargs['pk']
-        return reverse_lazy('profile',kwargs={'pk':pk})
+        profile=UserProfile.objects.get(pk=pk)
+        name=profile.name
+        return reverse_lazy('profile',kwargs={'name':name})
+         
 
     def test_func(self):
         profile=self.get_object()
@@ -79,7 +82,7 @@ class AddFollwer(LoginRequiredMixin,View):
         profile.followers.add(request.user)
 
 
-        return redirect('profile',pk=profile.pk)
+        return redirect('profile',name=profile.name)
 
 
 
@@ -88,7 +91,7 @@ class RemoveFollwer(LoginRequiredMixin,View):
         profile=UserProfile.objects.get(pk=pk)
         profile.followers.remove(request.user)
 
-        return redirect('profile',pk=profile.pk)
+        return redirect('profile',name=profile.name)
  
 class UserSearch(View):
     def get(self,request,*args,**kwargs):
