@@ -12,16 +12,16 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-5 col-sm-12 border-bottom position-relative">
               
-                <a href="{% url 'profile' profile.pk %}">
+                <a href="{% url 'profile' profile.name %}">
                     <img class="round-circle" style="float: left; margin-right: 1rem ;" height="30" width="30" src="{{  profile.picture.url }}" />
                 </a>
                 <p>
                     <a style="text-decoration: none" class="text-primary"
-                        href="{% url 'profile' profile.pk %}">@{{ profile.user }}
+                        href="{% url 'profile' profile.name %}">@{{ profile.user }}
                     </a>
                 </p>
               
-                <p><a style="text-decoration: none;" class="text-primary" href="{% url 'profile' profile.pk %}">@{{ profile.user }}</a></p>
+                <p><a style="text-decoration: none;" class="text-primary" href="{% url 'profile' profile.name %}">@{{ profile.user }}</a></p>
                 {% if profile.location %}
                     <p>{{ profile.location }}</p>
                 {% endif %}
