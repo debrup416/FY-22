@@ -37,7 +37,7 @@
             <p class="card-text">{{quest.detail|safe}}</p>
             <p>
                 {% if user.is_authenticated %}
-                <a href="{% url 'profile' quest.user.profile.pk %}" class="mr-2">{{quest.user.username}}</a>
+                <a href="{% url 'profile' quest.user.profile.name %}" class="mr-2">{{quest.user.username}}</a>
                 {% endif %}
             </p>
         </div>
