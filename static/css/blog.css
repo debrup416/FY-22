@@ -186,11 +186,57 @@ input[type=submit] {
 }
 
 .blog-body {
+    font-size: 1.3em;
     text-align: justify;
 }
 
 .blog-post-title {
     text-align: justify;
+}
+
+.tag-container {
+    display: flex;
+}
+
+.tags {
+    font-size: 0.4em;
+    padding: 5px;
+    background-color: lightblue;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.blog-post-title a,
+.tags a {
+    color: black;
+}
+
+.blog-post-container {
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.blog-post-author {
+    color: black;
+    padding-right: 10px;
+    font-size: 1.5em;
+}
+
+.blog-post-container {
+    display: flex;
+}
+
+.blog-post-content {
+    margin-left: 10px;
+}
+
+.list-profile-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: contain;
 }
 
 div.blog-body img {

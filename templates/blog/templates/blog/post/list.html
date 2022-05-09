@@ -10,34 +10,35 @@
 {% endif %}
 
 {% for post in posts %}
-<h2 class="blog-post-title">
-    <a href="{{ post.get_absolute_url }}">
-        {{ post.title }}
-    </a>
-    {% for tag in post.tags.all %}
-    <small class="text-muted">
-        <p class="tags">
-            <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
-                #{{ tag.name }}
-            </a>
+<div class="blog-post-container">
+    <div class="list-profile-img-container">
+        <img class="list-profile-img" src="{{ post.author.profile.picture.url }}" />
+    </div>
+    <div class="blog-post-content">
+        <p class="date">
+            <span class="blog-post-author">{{ post.author }}</span>{{ post.publish }}
         </p>
-    </small>
-    <p>
-        {% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </p>
-</h2>
-<p class="date">
-    Published {{ post.publish }} by {{ post.author }}
-</p>
+        <h2 class="blog-post-title">
+            <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+            </a>
+            <div class="text-muted tag-container">
+            {% for tag in post.tags.all %}
+                <span class="tags">
+                    <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                        {{ tag.name }}
+                    </a>
+                </span>
+            {% endfor %}
+            </div>
+        </h2>
 
-{% if post.image %}
-<img class="imgr" src='{{ post.image.url }}'/>
-{% endif %}
-<div class="blog-body">{{ post.body|markdown|truncatewords_html:20 }}</div>
-
-<hr>
-
+        {% if post.image %}
+        <img class="imgr" src='{{ post.image.url }}' />
+        {% endif %}
+        <div class="blog-body">{{ post.body|markdown|truncatewords_html:20 }}</div>
+    </div>
+</div>
 {% endfor %}
 
 
