@@ -8,27 +8,36 @@
 			<form class="login" method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
 				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
+					<i class="fa fas fa-user login__icon "></i>
                     {{ form.login }}
 					<!-- <input type="text" class="login__input" placeholder="User name / Email"> -->
 				</div>
 				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
+					<i class="fa fas fa-lock login__icon"></i>
                     {{ form.password }}
 					<!-- <input type="password" class="login__input" placeholder="Password"> -->
 				</div>
 				<button class="button login__submit">
 					<span class="button__text">Log In Now</span>
-					<i class="button__icon fas fa-chevron-right"></i>
+					<i class="fa fa-chevron-right button__icon"></i>
 				</button>				
 			</form>
-			<div class="social-login">
-				<!-- <h3>log in via</h3> -->
+			<!-- <div class="social-login">
+				<h3>log in via</h3>
 				<div class="social-icons">
 					<a href="#" class="social-login__icon fab fa-instagram"></a>
 					<a href="#" class="social-login__icon fab fa-facebook"></a>
 				</div>
-			</div>
+			</div> -->
+
+			<div class="social-login">
+				
+				<h3>New Here?</h3>
+				<div class="social-icons">
+					<a style="text-decoration: none; color: black;"  href="{% url 'account_signup' %}">Register</a>
+				</div>
+			</div> 
+			
 		</div>
 		<div class="screen__background">
 			<span class="screen__background__shape screen__background__shape4"></span>
