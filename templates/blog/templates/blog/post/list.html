@@ -12,11 +12,13 @@
 {% for post in posts %}
 <div class="blog-post-container">
     <div class="list-profile-img-container">
-        <img class="list-profile-img" src="{{ post.author.profile.picture.url }}" />
+        <a href="{% url 'profile' post.author.profile.name %}">
+            <img class="list-profile-img" src="{{ post.author.profile.picture.url }}" />
+        </a>
     </div>
     <div class="blog-post-content">
         <p class="date">
-            <span class="blog-post-author">{{ post.author }}</span>{{ post.publish }}
+            <span class="blog-post-author"><a href="{% url 'profile' post.author.profile.name %}">{{ post.author }}</a></span>{{ post.publish }}
         </p>
         <h2 class="blog-post-title">
             <a href="{{ post.get_absolute_url }}">

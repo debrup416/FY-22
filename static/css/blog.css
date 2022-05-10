@@ -239,7 +239,8 @@ input[type=submit] {
     object-fit: contain;
 }
 
-div.blog-body img {
+div.blog-body img,
+.imgr {
     display: block;
     max-width: 100% !important;
     max-height: 50vh !important;

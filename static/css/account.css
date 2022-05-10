@@ -95,6 +95,20 @@ body {
 	position: relative;	
 }
 
+<<<<<<< HEAD
+=======
+.login__field input{
+	border: none !important ;
+	border-bottom: 2px solid #D1D1D4 !important ;
+	background: none !important;
+	padding: 10px !important;
+	padding-left: 24px !important;
+	font-weight: 700 !important;
+	width: 75% !important;
+	transition: .2s !important;
+}
+
+>>>>>>> upstream/Design
 .login__icon {
 	position: absolute;
 	top: 30px;
