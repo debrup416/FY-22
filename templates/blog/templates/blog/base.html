@@ -13,7 +13,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel='stylesheet' type="text/css" media="screen" href="{% static 'css/blog.css' %}?{% now 'U' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     {% block head_extra %}
     {% endblock %}
 
@@ -43,12 +43,14 @@
 
         <nav class="blog-nav">
             <button onclick="cus_open()" class="open-btn blog-float-left">☰</button>
-            <a class="blog-float-left" href="{% url 'index' %}">Home</a>
+            <a class="blog-float-left" href="{% url 'index' %}"><i class="fa fa-home" aria-hidden="true"></i></a>
             <a class="blog-float-left" href="{% url 'blog:post_list' %}">Blog</a>
             <a class="blog-float-left" href="{% url 'forum:home' %}">Forum</a>
             {% if user.is_authenticated %}
-            <a class="blog-float-right" href="{% url 'account_logout' %}">Sign Out</a>
-            <a class="blog-float-right" href="{% url 'profile' request.user.profile.name %}">Profile</a>
+            <a class="blog-float-right" href="{% url 'account_logout' %}"><i class="fa fa-sign-out"
+                    aria-hidden="true"></i></a>
+            <a class="blog-float-right" href="{% url 'profile' request.user.profile.name %}"><i class="fa fa-user"
+                    aria-hidden="true"></i></a>
             {% if page != 'new-post' %}
             <a class="blog-float-right" href="{% url 'blog:post_create' %}"><i class="fa fa-solid fa-plus"></i></a>
             {% endif %}
@@ -76,11 +78,9 @@
             <button class="btn btn-outline-secondary" type="submit">search</button>
         </form>
 
-        {% block content_search %}
-        {% endblock %}
-
-
         <div class="content">
+            {% block content_search %}
+            {% endblock %}
             {% block content %}
             {% endblock %}
         </div>
