@@ -14,17 +14,18 @@
     {% endblock %}
   </head>
   <body>
+    <a class="home-from-acc" href="{% url 'index' %}">Home</a>
     {% block body %}
 
     {% if messages %}
-    <div>
+    <center>
       <strong>Messages:</strong>
       <ul>
         {% for message in messages %}
         <li>{{message}}</li>
         {% endfor %}
       </ul>
-    </div>
+    </center>
     {% endif %}
 
     
