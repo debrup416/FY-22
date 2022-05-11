@@ -2,20 +2,23 @@
 {% load blog_tags %}
 
 {% block content_search %}
-    <center>
-        {% if searched %}
-        <h2>You search for.....{{ searched }}</h2>
+{% if searched %}
+<h2 class="search-header">You searched for ... {{ searched }}</h2>
 
-        {% for p in result %}
+{% for p in result %}
+<div class="search-container">
+    <div class="search-post-title">
         <a href="{{ p.get_absolute_url }}">
             {{ p.title }}
         </a>
-        {{ p.body|markdown|truncatewords_html:21 }}
-        {% endfor %}
-
-        {% else %}
-        <h2>Nothing Found...</h2>
-        {% endif %}
-    </center>
- {{ obj }}
+    </div>
+    <div class="search-post-body">
+        {{ p.body|markdown|truncatewords_html:20 }}
+    </div>
+</div>
+{% endfor %}
+{% if not result %}
+<h2 class="search-header">Nothing Found...</h2>
+{% endif %}
+{% endif %}
 {% endblock %}

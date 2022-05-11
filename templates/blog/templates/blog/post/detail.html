@@ -21,11 +21,13 @@
         Published {{ post.publish }} by {{ post.author }}
     </p>
 
-    {% for tag in post.tags.all %}
-    <a class="tags-item" href="{% url 'blog:post_list_by_tag' tag.slug %}">
-        #{{ tag.name }}
-    </a>
-    {% endfor %}
+    <div class="tag-container">
+        {% for tag in post.tags.all %}
+        <a class="details-tags" href="{% url 'blog:post_list_by_tag' tag.slug %}">
+            {{ tag.name }}
+        </a>
+        {% endfor %}
+    </div>
 
     {% if page != 'post-edit' %}
 
@@ -34,7 +36,7 @@
     {% endif %}
 
     <div class="post-details-body">
-    {{ post.body|markdown }}
+        {{ post.body|markdown }}
     </div>
 
     {% endif %}
@@ -100,12 +102,12 @@
     </h2>
     {% endwith %}
 
-    <br/>
+    <br />
 
     {% for comment in comments %}
     <div class="comment">
         <p class="info">
-            {{ comment.name }} - 
+            {{ comment.name }} -
             {{ comment.created }}
         </p>
         {{ comment.body|linebreaks }}
