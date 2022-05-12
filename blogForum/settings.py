@@ -163,7 +163,7 @@ EMAIL_BACKEND = 'anymail.backends.sendinblue.EmailBackend'
 SERVER_EMAIL = "smtp-relay.sendinblue.com"
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER')
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": os.environ.get('SECRET_KEY') 
+    "SENDINBLUE_API_KEY": os.environ.get('API_KEY') 
 }
 
 # EMAIL_HOST = 'smtp.gmail.com'
