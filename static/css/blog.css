@@ -348,6 +348,10 @@ div.blog-body img,
     font-size: 1.5em;
 }
 
+label[for="id_body"] {
+    float: auto !important;
+}
+
 @media (max-width: 500px) {
     .content {
         width: 100%;
@@ -384,5 +388,21 @@ div.blog-body img,
 
     .post-details-title {
         font-size: 1.2em;
+    }
+
+    .blog-post-title > a {
+        font-size: 0.5em;
+    }
+
+    .blog-post-title {
+        line-height: 0.4em;
+    }
+
+    .blog-body > p {
+        font-size: 0.6em;
+    }
+
+    a.tags {
+        font-size: 0.4em;
     }
 }

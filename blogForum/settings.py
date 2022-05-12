@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'ckeditor',
-    "anymail",
 
     'accounts',
     'blog',
     'forum',
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -159,28 +159,23 @@ LOGIN_REDIRECT_URL = 'index'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
 
+EMAIL_BACKEND = 'anymail.backends.sendinblue.EmailBackend'
+SERVER_EMAIL = "smtp-relay.sendinblue.com"
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER')
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": os.environ.get('SECRET_KEY') 
+}
+
 # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 
-EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
-SERVER_EMAIL = "smtp-relay.sendinblue.com"
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER')
-
-ANYMAIL = { 
-    "SENDINBLUE_API_KEY":os.environ.get('API_KEY')  ,
-}
-
-
 TAGGIT_CASE_INSENSITIVE = True
-
 
 CKEDITOR_CONFIGS = {
 'default': {
-    # 'toolbar': None, #You can change this based on your requirements.
     'width': 'auto',
-    },
+}
 }
