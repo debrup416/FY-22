@@ -10,6 +10,10 @@ class PostForm(forms.ModelForm):
         fields=['title','body','image','tags']
         widgets = {
             'tags': TagWidget(),
+             
+        }
+        labels={
+            'body':'',
         }
 
 
