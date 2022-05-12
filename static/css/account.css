@@ -235,3 +235,7 @@ p {
 .home-from-acc {
   margin: 10px;
 }
+
+.alert-error .alert-item {
+  color: lightcoral;
+}

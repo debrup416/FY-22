@@ -173,3 +173,9 @@ ANYMAIL = {
 # EMAIL_USE_TLS = True
 
 TAGGIT_CASE_INSENSITIVE = True
+
+CKEDITOR_CONFIGS = {
+'default': {
+    'width': 'auto',
+}
+}
