@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,11 +46,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'ckeditor',
+    "anymail",
 
     'accounts',
     'blog',
     'forum',
-    "anymail",
+   
 ]
 
 MIDDLEWARE = [
@@ -166,6 +167,7 @@ ANYMAIL = {
     "SENDINBLUE_API_KEY": os.environ.get('API_KEY') 
 }
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
