@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'ckeditor',
-    "anymail",
 
     'accounts',
     'blog',
