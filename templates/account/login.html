@@ -29,8 +29,7 @@
 						<use xlink:href="#icon-user"></use>
 					</svg><span class="hidden">Username</span></label>
 				{{ form.login }}
-				<!-- <input autocomplete="username" id="login__username" type="text" name="username" class="form__input"
-					placeholder="Username" required> -->
+			 
 			</div>
 
 			<div class="form__field">
@@ -38,14 +37,12 @@
 						<use xlink:href="#icon-lock"></use>
 					</svg><span class="hidden">Password</span></label>
 				{{ form.password }}
-				<!-- <input id="login__password" type="password" name="password" class="form__input" placeholder="Password"
-					required> -->
+				 
 			</div>
 
 			<div class="form__field">
 				<p class="text--left">{{ form.remember }} Remember me?</p>
-				<!-- <input id="login__password" type="password" name="password" class="form__input" placeholder="Password"
-					required> -->
+			 
 			</div>
 
 			<p class="text--left"><a href="{% url 'account_reset_password' %}">Forgotten Password? </a></p>
