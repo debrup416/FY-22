@@ -197,7 +197,7 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL=None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # try disabling it
 WHITENOISE_USE_FINDERS = True
